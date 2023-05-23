@@ -618,6 +618,60 @@ static const struct rpmpd_desc msm8953_desc = {
 	.max_state = RPM_SMD_LEVEL_TURBO,
 };
 
+static struct rpmpd *msm8974_pm8941_rpmpds[] = {
+	[MSM8974_VDDCX] =	&cx_s2b_corner,
+	[MSM8974_VDDCX_AO] =	&cx_s2b_corner_ao,
+	[MSM8974_VDDCX_VFC] =	&cx_s2b_vfc,
+	/* TODO
+	[MSM8974_VDDGFX] =	&gfx_s4b_corner,
+	[MSM8974_VDDGFX_VFC] =	&gfx_s4b_vfc,
+	*/
+};
+
+static const struct rpmpd_desc msm8974_pm8941_desc = {
+	.rpmpds = msm8974_pm8941_rpmpds,
+	.num_pds = ARRAY_SIZE(msm8974_pm8941_rpmpds),
+	.max_state = MAX_CORNER_RPMPD_STATE,
+};
+
+static struct rpmpd *msm8974_pm8941_mx_rpmpds[] = {
+	[MSM8974_MX_VDDMX] =	&mx_s1b_uv,
+	[MSM8974_MX_VDDMX_AO] =	&mx_s1b_uv_ao,
+};
+
+static const struct rpmpd_desc msm8974_pm8941_mx_desc = {
+	.rpmpds = msm8974_pm8941_mx_rpmpds,
+	.num_pds = ARRAY_SIZE(msm8974_pm8941_mx_rpmpds),
+	.max_state = 1050000, /* uV */
+};
+
+static struct rpmpd *msm8974_pma8084_rpmpds[] = {
+	[MSM8974_VDDCX] =	&cx_s2a_corner,
+	[MSM8974_VDDCX_AO] =	&cx_s2a_corner_ao,
+	[MSM8974_VDDCX_VFC] =	&cx_s2a_vfc,
+	/* TODO
+	[MSM8974_VDDGFX] =	&gfx_s7a_corner,
+	[MSM8974_VDDGFX_VFC] =	&gfx_s7a_vfc,
+	*/
+};
+
+static const struct rpmpd_desc msm8974_pma8084_desc = {
+	.rpmpds = msm8974_pma8084_rpmpds,
+	.num_pds = ARRAY_SIZE(msm8974_pma8084_rpmpds),
+	.max_state = MAX_CORNER_RPMPD_STATE,
+};
+
+static struct rpmpd *msm8974_pma8084_mx_rpmpds[] = {
+	[MSM8974_MX_VDDMX] =	&mx_s1a_uv,
+	[MSM8974_MX_VDDMX_AO] =	&mx_s1a_uv_ao,
+};
+
+static const struct rpmpd_desc msm8974_pma8084_mx_desc = {
+	.rpmpds = msm8974_pma8084_mx_rpmpds,
+	.num_pds = ARRAY_SIZE(msm8974_pma8084_mx_rpmpds),
+	.max_state = 1050000, /* uV */
+};
+
 static struct rpmpd *msm8976_rpmpds[] = {
 	[MSM8976_VDDCX] =	&cx_s2a_lvl,
 	[MSM8976_VDDCX_AO] =	&cx_s2a_lvl_ao,
@@ -797,6 +851,10 @@ static const struct of_device_id rpmpd_match_table[] = {
 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
 	{ .compatible = "qcom,msm8939-rpmpd", .data = &msm8939_desc },
 	{ .compatible = "qcom,msm8953-rpmpd", .data = &msm8953_desc },
+	{ .compatible = "qcom,msm8974-pm8941-rpmpd", .data = &msm8974_pm8941_desc },
+	{ .compatible = "qcom,msm8974-pm8941-rpmpd-mx", .data = &msm8974_pm8941_mx_desc },
+	{ .compatible = "qcom,msm8974-pma8084-rpmpd", .data = &msm8974_pma8084_desc },
+	{ .compatible = "qcom,msm8974-pma8084-rpmpd-mx", .data = &msm8974_pma8084_mx_desc },
 	{ .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
 	{ .compatible = "qcom,msm8994-rpmpd", .data = &msm8994_desc },
 	{ .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
