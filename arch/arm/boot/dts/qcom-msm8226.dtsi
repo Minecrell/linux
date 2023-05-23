@@ -110,6 +110,33 @@
 						};
 					};
 				};
+
+				rpmpd_mx: power-controller-mx {
+					compatible = "qcom,msm8226-rpmpd-mx";
+					#power-domain-cells = <1>;
+					operating-points-v2 = <&rpmpd_mx_opp_table>;
+
+					rpmpd_mx_opp_table: opp-table {
+						compatible = "operating-points-v2";
+
+						rpmpd_mx_svs: opp-1050000 {
+							opp-level = <1050000>;
+							//opp-microvolts = <1050000>;
+						};
+						rpmpd_mx_nom: opp-1150000 {
+							opp-level = <1150000>;
+							//opp-microvolts = <1150000>;
+						};
+						rpmpd_mx_turbo: opp-1280000 {
+							opp-level = <1280000>;
+							//opp-microvolts = <1280000>;
+						};
+						rpmpd_mx_opp_vmax: opp-1337500 {
+							opp-level = <1337500>;
+							//opp-microvolts = <1337500>;
+						};
+					};
+				};
 			};
 		};
 	};

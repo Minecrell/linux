@@ -37,6 +37,7 @@
 #define KEY_FLOOR_CORNER	0x636676   /* vfc */
 #define KEY_FLOOR_LEVEL		0x6c6676   /* vfl */
 #define KEY_LEVEL		0x6c766c76 /* vlvl */
+#define KEY_VOLTAGE		0x00007675 /* uv */
 
 #define MAX_CORNER_RPMPD_STATE	6
 
@@ -255,6 +256,24 @@ static struct rpmpd mx_l3a_corner_ao = {
 	.res_type = RPMPD_LDOA,
 	.res_id = 3,
 	.key = KEY_CORNER,
+};
+
+static struct rpmpd mx_l3a_uv_ao;
+static struct rpmpd mx_l3a_uv = {
+	.pd = { .name = "mx", },
+	.peer = &mx_l3a_uv_ao,
+	.res_type = RPMPD_LDOA,
+	.res_id = 3,
+	.key = KEY_VOLTAGE,
+};
+
+static struct rpmpd mx_l3a_uv_ao = {
+	.pd = { .name = "mx_ao", },
+	.peer = &mx_l3a_uv,
+	.active_only = true,
+	.res_type = RPMPD_LDOA,
+	.res_id = 3,
+	.key = KEY_VOLTAGE,
 };
 
 static struct rpmpd mx_l12a_lvl_ao;
@@ -541,6 +560,17 @@ static const struct rpmpd_desc msm8226_desc = {
 	.max_state = MAX_CORNER_RPMPD_STATE,
 };
 
+static struct rpmpd *msm8226_mx_rpmpds[] = {
+	[MSM8226_MX_VDDMX] =	&mx_l3a_uv,
+	[MSM8226_MX_VDDMX_AO] =	&mx_l3a_uv_ao,
+};
+
+static const struct rpmpd_desc msm8226_mx_desc = {
+	.rpmpds = msm8226_mx_rpmpds,
+	.num_pds = ARRAY_SIZE(msm8226_mx_rpmpds),
+	.max_state = 1337500, /* uV */
+};
+
 static struct rpmpd *msm8939_rpmpds[] = {
 	[MSM8939_VDDMDCX] =	&md_s1a_corner,
 	[MSM8939_VDDMDCX_AO] =	&md_s1a_corner_ao,
@@ -762,6 +792,7 @@ static const struct rpmpd_desc qcm2290_desc = {
 static const struct of_device_id rpmpd_match_table[] = {
 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
 	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
+	{ .compatible = "qcom,msm8226-rpmpd-mx", .data = &msm8226_mx_desc },
 	{ .compatible = "qcom,msm8909-rpmpd", .data = &msm8916_desc },
 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
 	{ .compatible = "qcom,msm8939-rpmpd", .data = &msm8939_desc },
